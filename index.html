@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KEY SYSTEM - GAEL09 EXPLOIT</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      height:100vh;
+      background:#000;
+      color:#00ff41;
+      font-family:'Courier New', monospace;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      overflow:hidden;
+      flex-direction:column;
+      text-align:center;
+    }
+    h1 {
+      font-size:7rem;
+      text-shadow:0 0 30px #00ff41;
+      animation:glow 1.8s infinite alternate;
+      margin-bottom:30px;
+    }
+    .instructions {
+      font-size:2.2rem;
+      margin:40px 0;
+      max-width:80%;
+      line-height:1.4;
+    }
+    .btn {
+      padding:20px 60px;
+      font-size:2rem;
+      background:#ff0000;
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      margin:20px;
+      box-shadow:0 0 20px #ff0000;
+      transition:all 0.3s;
+    }
+    .btn:hover { transform:scale(1.1); box-shadow:0 0 50px #ff0000; }
+    .ad {
+      position:fixed;
+      top:0; left:0; right:0; bottom:0;
+      background:rgba(0,0,0,0.95);
+      display:none;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      z-index:999;
+      color:#ff0000;
+      font-size:5rem;
+      text-shadow:0 0 20px #ff0000;
+    }
+    .close-ad {
+      margin-top:60px;
+      padding:25px 80px;
+      font-size:2.5rem;
+      background:#00ff41;
+      color:#000;
+      border:none;
+      border-radius:15px;
+      cursor:pointer;
+      box-shadow:0 0 30px #00ff41;
+    }
+    .key-screen {
+      display:none;
+      flex-direction:column;
+      align-items:center;
+    }
+    .key {
+      font-size:6rem;
+      color:#ffff00;
+      margin:40px 0;
+      text-shadow:0 0 40px #ffff00;
+      letter-spacing:10px;
+    }
+    .copy-btn {
+      padding:20px 50px;
+      font-size:2rem;
+      background:#00ff41;
+      color:#000;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+    }
+
+    @keyframes glow { from {text-shadow:0 0 10px #00ff41;} to {text-shadow:0 0 60px #00ff41, 0 0 100px #00ff41;} }
+
+    canvas { position:fixed; top:0; left:0; z-index:-1; opacity:0.2; }
+  </style>
+</head>
+<body>
+
+  <canvas id="matrix"></canvas>
+
+  <h1>KEY SYSTEM</h1>
+
+  <div id="step1">
+    <div class="instructions">
+      1. Haz clic en el botón de abajo<br>
+      2. Mira el video COMPLETO<br>
+      3. Dale LIKE y SUSCRIBETE al canal 🔥<br><br>
+      ¡Después regresa aquí y completa las tareas!
+    </div>
+    <button class="btn" onclick="startTasks()">VER VIDEO + LIKE/SUB</button>
+  </div>
+
+  <div id="step2" style="display:none;">
+    <div class="instructions">¡Tareas en progreso! Espera un momento... (simulando verificación)</div>
+    <div style="font-size:3rem; margin:40px;">🕒 Verificando...</div>
+  </div>
+
+  <div class="ad" id="ad">
+    <div>¡ANUNCIO OBLIGATORIO! 🔥</div>
+    <div style="font-size:3rem; margin:40px 0;">Apoya al creador viendo este ad</div>
+    <button class="close-ad" onclick="showKey()">QUITAR ANUNCIO</button>
+  </div>
+
+  <div class="key-screen" id="keyScreen">
+    <h1>¡KEY OBTENIDA! 😈</h1>
+    <div class="key">57575665</div>
+    <button class="copy-btn" onclick="copyKey()">COPIAR KEY</button>
+    <p style="margin-top:40px; font-size:1.8rem;">Pégala en tu exploit/script y diviértete 🔥</p>
+  </div>
+
+  <script>
+    // Matrix lluvia fondo
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    const chars = '01GAEL09EXPLOIT🔥57575665ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0,0,0,0.05)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = '#0f0';
+      ctx.font = fontSize + 'px monospace';
+      for(let i=0; i<drops.length; i++){
+        const text = chars.charAt(Math.floor(Math.random()*chars.length));
+        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i]=0;
+        drops[i]++;
+      }
+    }
+    setInterval(draw, 35);
+    window.addEventListener('resize', ()=>{ canvas.height=window.innerHeight; canvas.width=window.innerWidth; });
+
+    // Lógica del sistema
+    function startTasks() {
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'flex';
+
+      // Abre el video en nueva pestaña
+      window.open('https://youtu.be/jx0sFRIwriM', '_blank');
+
+      // Simula "espera" de tareas (puedes aumentar el tiempo)
+      setTimeout(() => {
+        document.getElementById('step2').style.display = 'none';
+        document.getElementById('ad').style.display = 'flex';
+      }, 8000); // 8 segundos de "verificación"
+    }
+
+    function showKey() {
+      document.getElementById('ad').style.display = 'none';
+      document.getElementById('keyScreen').style.display = 'flex';
+    }
+
+    function copyKey() {
+      navigator.clipboard.writeText('57575665').then(() => {
+        alert('¡KEY COPIADA: 57575665! Pégala donde quieras 😈');
+      }).catch(() => {
+        alert('Copia manual: 57575665');
+      });
+    }
+  </script>
+
+</body>
+</html>
